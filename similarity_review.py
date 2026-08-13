@@ -564,7 +564,7 @@ def review_table(results: list[ReviewResult], matches_only: bool = False, cross:
         record = result.record
         rows.append(
             {
-                "검토 대상 영역": f"{record.display_type} / {record.category}",
+                "검토 대상 영역": record.category,
                 "학년 반": record.grade_class,
                 "번호": record.number,
                 "검토 내용": record.content,
@@ -635,7 +635,7 @@ def _write_review_sheet(
             continue
         record = result.record
         values = [
-            f"{record.display_type} / {record.category}",
+            record.category,
             record.grade_class,
             record.number,
             record.content,
