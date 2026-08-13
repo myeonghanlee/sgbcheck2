@@ -56,7 +56,7 @@ def build_colored_preview_html(results: list[object], cross: bool) -> str:
             "<tr>"
             f"<td>{html.escape(result.record.grade_class)}</td>"
             f"<td style=\"text-align:center\">{html.escape(result.record.number)}번</td>"
-            f"<td>{html.escape(result.record.display_type)}<br><span style=\"color:#666\">{html.escape(result.record.category)}</span></td>"
+            f"<td>{html.escape(result.record.category)}</td>"
             f"<td style=\"min-width:500px;line-height:1.75\">{colored_content_html(result)}</td>"
             f"<td>{labels}</td>"
             f"<td>{html.escape(student_numbers)}</td>"
@@ -105,8 +105,15 @@ def render_review_tab(
     st.caption(f"검토 대상 {len(results):,}행 중 동일성 검출 행은 **{match_count:,}행**입니다.")
 
     table = review_table(results, matches_only=matches_only, cross=cross)
-    if table.empty:
-        st.info("선택한 표시 조건에서 동일성이 검출된 행이 없습니다.")
+    if match_count == 0:
+        st.info(
+            f"학생 {len(results):,}행의 비교 분석은 완료되었습니다. 현재 완전 동일, 연속 3문장 동일, "
+            "전체 내용 유사도 95% 이상 기준을 충족한 행은 없습니다."
+        )
+        if matches_only:
+            st.caption("`동일성 검출 행만 표시`를 해제하면 분석된 전체 학생 행을 확인할 수 있습니다.")
+        else:
+            st.dataframe(table, use_container_width=True, hide_index=True)
         return
 
     st.markdown("#### 검토 결과 색상 미리보기")
