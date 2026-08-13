@@ -1,4 +1,4 @@
-"""학교생활기록부 학생별 내용 동일성 검토 Streamlit 앱."""
+"""학점도"""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from similarity_review import (
 )
 
 st.set_page_config(
-    page_title="학교생활기록부 내용 동일성 검토",
+    page_title="학교생활기록부 작성 내용 검토",
     page_icon="📚",
     layout="wide",
     initial_sidebar_state="expanded",
